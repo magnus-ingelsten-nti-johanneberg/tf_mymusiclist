@@ -1,0 +1,23 @@
+
+section
+    h2 add album:
+    form action="/albums" method="post" 
+        input type="text" name="album_title" id="album_title" placeholder="aaaaaaaaa"
+        label for="album_title" album title
+        br
+        input type="text" name="artist_name" id="artist_name" placeholder="kanye west"
+        label for="artist_name" artist name    
+        br
+        input type="radio" name="album_type" id="lp" value ="lp"
+        label for="lp" LP
+        br
+        input type="radio" name="album_type" id="ep" value ="ep"
+        label for="ep" EP
+        br
+        input type="radio" name="album_type" id="single" value ="single"
+        label for="single" Single
+        br
+        input type="date" name="release_date" id="release_date"
+        label for="release_date" release date
+        br
+        input type="submit" value="Add Album!"
