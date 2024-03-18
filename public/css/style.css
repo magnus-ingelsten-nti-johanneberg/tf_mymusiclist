@@ -38,3 +38,7 @@ form > input {
   margin: 8px;
   padding: 4px;
 }
+
+form > input[type="date"] {
+  opacity: 100%;
+}

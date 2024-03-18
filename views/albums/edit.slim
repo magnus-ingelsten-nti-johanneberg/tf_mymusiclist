@@ -1,0 +1,22 @@
+section
+    h2 edit album (#{album_hash['title']} by #{album_hash['name']}):
+    form action="/albums/#{id}" method="post" 
+        input type="text" name="album_title" id="album_title" placeholder="aaaaaaaaa" value="#{album_hash['title']}"
+        label for="album_title" album title
+        br
+        input type="text" name="artist_name" id="artist_name" placeholder="kanye west" value="#{album_hash['name']}"
+        label for="artist_name" artist name    
+        br
+        input type="radio" name="album_type" id="lp" value ="lp" 
+        label for="lp" LP  
+        br
+        input type="radio" name="album_type" id="ep" value ="ep"
+        label for="ep" EP
+        br
+        input type="radio" name="album_type" id="single" value ="single"
+        label for="single" Single
+        br
+        input type="date" name="release_date" id="release_date" value="#{album_hash['release_date']}"
+        label for="release_date" release date
+        br
+        input type="submit" value="Edit Album!"

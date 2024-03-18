@@ -1,0 +1,12 @@
+
+h2 browse albums
+
+ul 
+    - album_list.each do |album|
+        li #{album['title']}  #{album['release_date']} cringe
+
+        form action="albums/#{album['id']}/delete" method="post" 
+            input type="submit" value="delete"
+        
+        form action="albums/#{album['id']}/edit" method="get"
+            input type="submit" value="edit"
