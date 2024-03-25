@@ -1,6 +1,6 @@
 section
     h2 edit album (#{album_hash['title']} by #{album_hash['name']}):
-    form action="/albums/#{id}" method="post" 
+    form action="/albums/#{id}/update" method="post" 
         input type="text" name="album_title" id="album_title" placeholder="aaaaaaaaa" value="#{album_hash['title']}"
         label for="album_title" album title
         br
