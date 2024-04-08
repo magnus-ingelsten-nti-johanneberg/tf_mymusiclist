@@ -8,13 +8,27 @@
 
 body {
   overflow-x: hidden;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 
 header {
   height: 60px;
+  margin-left: 50px;
+  margin-right: 50px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
+
+#headertext {
+  font-size: 2.5rem;
+}
+
+.login_buttons > a {
+  margin: 20px;
+}
+
 nav {
   background-color: #2e51a2;
   height: 34px;

@@ -7,7 +7,7 @@ section
         input type="text" name="artist_name" id="artist_name" placeholder="kanye west" value="#{album_hash['name']}"
         label for="artist_name" artist name    
         br
-        input type="radio" name="album_type" id="lp" value ="lp" 
+        input type="radio" name="album_type" id="lp" value ="lp" required=true
         label for="lp" LP  
         br
         input type="radio" name="album_type" id="ep" value ="ep"
@@ -16,7 +16,7 @@ section
         input type="radio" name="album_type" id="single" value ="single"
         label for="single" Single
         br
-        input type="date" name="release_date" id="release_date" value="#{album_hash['release_date']}"
-        label for="release_date" release date
+        input type="date" name="release_date" id="rel_date" value="#{album_hash['release_date']}"
+        label for="rel_date" release date
         br
         input type="submit" value="Edit Album!"

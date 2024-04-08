@@ -1,9 +1,9 @@
-
 h2 browse albums
 
 ul 
     - album_hash.each do |album|
-        li #{album['title']} by #{album['artist_name']}, released #{album['release_date']}
+        a href="/album/#{album['album_id']}/#{album['title'].gsub(' ', '_')}"  #{album['title']}
+        p by #{album['artist_name']}, released #{album['release_date']}
 
         form action="albums/#{album['album_id']}/delete" method="post" 
             input type="submit" value="delete"
