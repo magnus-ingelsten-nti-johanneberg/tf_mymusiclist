@@ -1,0 +1,41 @@
+
+div#profile_wrapper
+    h2 #{page_album_hash['title']}
+    div#pf
+        div#pf_left 
+            img#profile_pfp src="/img/album_placeholder.png"
+            p released #{page_album_hash['release_date']}
+            form action="/album/#{page_album_hash['album_id']}/favorite/update" method="post"
+                - if logged_in 
+                    - if active_user_album_rel_hash(album_id) == nil || active_user_album_rel_hash(album_id)['is_favorite'] == 0
+                        input type="submit" name="favorite_toggle" value="add to favorites"
+                    - elsif active_user_album_rel_hash(album_id)['is_favorite'] == 1
+                        input type="submit" name="favorite_toggle" value="remove from favorites"
+                    - else 
+                        input type="submit" name="favorite_toggle" value="add to favorites"
+
+
+        div#pf_right
+            div
+                h2.score_text SCORE: #{score.round(2)}
+                - if logged_in
+                    div.yourscore
+                        h3 your score:
+                        form action="/album/#{page_album_hash['album_id']}/rating/update" method="post" 
+                            select#album_score  name="album_score"
+                                option value="0" (no score)
+                                - for n in (0..9)
+                                    - if active_user_album_rel_hash(album_id) == nil
+                                        option value="#{10-n}" (#{10-n}) #{scores[n]}
+                                    - elsif active_user_album_rel_hash(album_id)['rating'] == (10-n)
+                                        option value="#{10-n}" selected="selected" (#{10-n}) #{scores[n]}
+                                    - else
+                                        option value="#{10-n}" (#{10-n}) #{scores[n]}
+                
+                            input type="submit" value="update score"
+
+            h3 description
+            p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quas, repellendus eaque quos repellat dolore a beatae odio atque deserunt cupiditate dolor, placeat obcaecati enim. Dolore repellendus nulla nam ipsa distinctio inventore rerum ut quo fuga qui temporibus aliquam nisi recusandae dolores, iste eius similique quos sequi accusamus vitae molestias!
+            h3 favorites 
+            p = favorites
+        p = active_user_album_rel_hash(album_id)

@@ -1,12 +1,22 @@
-h2 browse albums
+div.browse_wrapper
+    h2 browse albums!
 
-ul 
-    - album_hash.each do |album|
-        a href="/album/#{album['album_id']}/#{album['title'].gsub(' ', '_')}"  #{album['title']}
-        p by #{album['artist_name']}, released #{album['release_date']}
+    ul
+        - albums_hash.each do |album|
+            
+            div.album_listing
+                img#album_cover src="/img/album_placeholder.png" 
+                div#album_info 
+                    a href="/album/#{album['album_id']}/#{album['title'].gsub(' ', '_')}"  #{album['title']}
+                    p by #{album['artist_name']}
+                    p released #{album['release_date']}
 
-        form action="albums/#{album['album_id']}/delete" method="post" 
-            input type="submit" value="delete"
-        
-        form action="albums/#{album['album_id']}/edit" method="get"
-            input type="submit" value="edit"
+                - if logged_in 
+                    - if user_hash['role'] == "admin"
+                        form action="albums/#{album['album_id']}/delete" method="post" 
+                            input type="submit" value="delete"
+                        
+                        form action="albums/#{album['album_id']}/edit" method="get"
+                            input type="submit" value="edit"
+                        
+                    

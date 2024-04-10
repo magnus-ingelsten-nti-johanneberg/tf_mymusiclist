@@ -1,15 +1,74 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
+  background-color: rgb(15, 15, 15);
   color: white;
   padding: 0;
   margin: 0;
 }
 
+#header_pfp {
+  height: 40px;
+  width: 40px;
+}
+
+#profile_pfp {
+  height: 250px;
+  width: auto;
+}
+
+#album_cover {
+  height: 60px;
+  width: auto;
+}
+
+#album_info {
+  display: flex;
+  flex-direction: column;
+}
+
+#album_info > * {
+  margin-left: 10px;
+}
+
+#pf {
+  display: flex;
+  flex-direction: row;
+}
+
+#pf_left > * {
+  margin: 5px;
+}
+
+#pf_right > * {
+  margin: 5px;
+}
+
+#pf_right {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+}
+
+#profile_wrapper > * {
+  margin: 10px;
+}
+
+.album_listing {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.album_listing > form {
+  width: min-content;
+  height: min-content;
+}
+
 body {
   overflow-x: hidden;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 400px;
+  margin-right: 400px;
 }
 
 header {
@@ -25,8 +84,93 @@ header {
   font-size: 2.5rem;
 }
 
-.login_buttons > a {
+table {
+  width: 100%;
+}
+
+td, th {
+  border: 2px solid #1e1e1e;
+  background-color: #1e1e1e;
+}
+
+td > *, th > * {
+  text-align: center;
+  background-color: #1e1e1e;
+}
+
+.notice {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background:rgba(255, 255, 255, 0.1);
+  width:30vw;
+  height: 15vh;
+  border-radius: 20px;
+  padding:50px;
+  font-size:4rem;
+}
+
+.browse_wrapper {
   margin: 20px;
+}
+
+.score_text {
+  font-size: 2rem;
+  background-color: #2e51a2;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.yourscore {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+}
+.yourscore > * {
+  width: fit-content;
+  margin: 10px;
+}
+
+.col_cover {
+  width: 110px;
+}
+.col_title {
+  text-align: center;
+  width: max-content;
+}
+.col_rating {
+  text-align: center;
+  width: 100px;
+}
+.col_type {
+  width: 100px;
+}
+.col_artist {
+  width: 200px;
+}
+
+.list_album_cover {
+  height: 100px;
+}
+.all_shit {
+  display: flex;
+  flex-direction: row;
+}
+
+.login_buttons, .user_icon {
+  display: flex;
+  align-items: center;
+}
+
+.login_buttons > *, .all_shit > * {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.user_icon > * {
+  margin: 5px;
 }
 
 nav {

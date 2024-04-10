@@ -1,0 +1,24 @@
+
+
+table
+    tr 
+        th.col_cover Cover
+        th.col_title Album Title 
+        th.col_rating Score 
+        th.col_type Type
+        th.col_artist Artist
+
+    - for album in user_albums 
+        table.list_table
+            tbody
+                tr
+                    td.col_cover
+                        img.list_album_cover src="/img/album_placeholder.png"
+                    td.col_title
+                        a href="/album/#{album['album_id']}/#{album['title'].gsub(' ', '_')}" #{album['title']}
+                    td.col_rating
+                        b = album['rating']
+                    td.col_type
+                        p = album['type'].upcase
+                    td.col_artist
+                        p = album['name']

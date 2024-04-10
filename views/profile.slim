@@ -1,0 +1,18 @@
+
+div#profile_wrapper
+    h2 #{profile_user['username']}'s profile 
+    div#pf
+        div#pf_left 
+            img#profile_pfp src="/img/avatar_placeholder.png"
+            p joined on #{profile_user['register_date']}
+            a.score_text href="/albumlist/#{profile_user['username']}" album list   
+        div#pf_right
+            h3 bio
+            p Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit dolores praesentium ad ducimus expedita obcaecati, dignissimos quidem delectus adipisci dolorum.
+            h3 recent ratings: 
+            - for album in user_albums 
+                p #{album['title']}, rated #{album['rating']}
+
+            h3 favorites 
+            h3 
+

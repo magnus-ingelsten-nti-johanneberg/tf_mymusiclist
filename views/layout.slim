@@ -6,13 +6,25 @@ html lang="en"
     link rel="stylesheet" href="/css/style.css"
     title mymusiclist
   body
+    - if flash[:notice]
+            span.notice = flash[:notice]
     header 
         a#headertext href="/" mymusiclist
-        div.login_buttons
-          a href="/register" sign up
-          a href="/login" login
+        - if logged_in
+            div.all_shit
+              div.login_buttons
+                a href="/logout" log out
+              a.user_icon href="/profile/#{user_hash['username']}"
+                p #{user_hash["username"]}
+                img#header_pfp src="/img/avatar_placeholder.png"
+        - else
+            div.login_buttons
+              a href="/register" sign up
+              a href="/login" login
     nav
-      a href="/albums/new" add album
+      - if logged_in 
+        - if user_hash['role'] == "admin"
+          a href="/albums/new" add album
       a href="/albums" browse albums
 
     == yield
