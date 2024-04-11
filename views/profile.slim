@@ -9,10 +9,14 @@ div#profile_wrapper
         div#pf_right
             h3 bio
             p Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit dolores praesentium ad ducimus expedita obcaecati, dignissimos quidem delectus adipisci dolorum.
+            div.favs
+                h3 user favorites:
+                - for album in albums_hash
+                    - if specific_user_album_rel_hash(album['album_id'], profile_user['id']) != nil
+                        - if specific_user_album_rel_hash(album['album_id'], profile_user['id'])['is_favorite'] == 1
+                            a href="/album/#{album['album_id']}/#{album['title'].gsub(' ','_')}" = specific_user_album_rel_hash(album['album_id'], profile_user['id'])['title']
+
             h3 recent ratings: 
             - for album in user_albums 
-                p #{album['title']}, rated #{album['rating']}
-
-            h3 favorites 
-            h3 
-
+                - if 1 <= album['rating']
+                    p #{album['title']}, rated #{album['rating']}
