@@ -6,6 +6,42 @@ require 'sqlite3'
 require 'bcrypt'
 require 'date'
 
+#helpers
+helpers do
+    def albums_hash #albums_hash är TITEL, TYP, RELEASE_DATE, ARTIST_NAME, ARTIST_ID, ALBUM_ID, REL_ID på SAMTLIGA ALBUM
+        db = db_connect("db/mml_db.db")
+        result = db.execute("SELECT title, type, release_date, name AS artist_name, artist_id, album_id, artist_album_rel.id AS rel_id FROM album INNER JOIN artist_album_rel ON album.id = artist_album_rel.album_id INNER JOIN artist ON artist.id = artist_album_rel.artist_id")
+        return result
+    end
+    def avg_score_hash
+        db = db_connect("db/mml_db.db")
+        albums_hash = db.execute("SELECT title, type, release_date, name AS artist_name, artist_id, album_id, artist_album_rel.id AS rel_id FROM album INNER JOIN artist_album_rel ON album.id = artist_album_rel.album_id INNER JOIN artist ON artist.id = artist_album_rel.artist_id")
+        result = {}
+        for album in albums_hash
+            result["#{album['album_id']}"] = (db.execute("SELECT AVG(rating) AS avg FROM user_album_rel WHERE rating >= 1 AND album_id = ?", album['album_id'])[0])['avg']
+        end
+        return result
+    end
+    def scores
+        possible_scores = ["masterpiece", "great", "very good", "good", "fine", "average", "bad", "very bad", "horrible", "appalling"]
+        return possible_scores
+    end
+    def active_user_album_rel_hash(album_id)
+        if $logged_in
+            db = db_connect("db/mml_db.db")
+            result = db.execute("SELECT title, user_id, album_id, is_favorite, rating, user_album_rel.id AS rel_id FROM album INNER JOIN user_album_rel ON album.id = user_album_rel.album_id INNER JOIN user ON user.id = user_album_rel.user_id WHERE album_id = ? AND user_id = ?", album_id, $user['id'])[0]
+        end
+        return result
+    end
+    def specific_user_album_rel_hash(album_id, user_id)
+        if $logged_in
+            db = db_connect("db/mml_db.db")
+            result = db.execute("SELECT title, user_id, album_id, is_favorite, rating, user_album_rel.id AS rel_id FROM album INNER JOIN user_album_rel ON album.id = user_album_rel.album_id INNER JOIN user ON user.id = user_album_rel.user_id WHERE album_id = ? AND user_id = ?", album_id, user_id)[0]
+        end
+        return result
+    end
+end
+
 # Contains all helper functions for the application
 #
 module Model
@@ -61,43 +97,6 @@ module Model
         x = BCrypt::Password.new(user_password_digest) == input_password
         return x
     end
-
-    #helpers
-    helpers do
-        def albums_hash #albums_hash är TITEL, TYP, RELEASE_DATE, ARTIST_NAME, ARTIST_ID, ALBUM_ID, REL_ID på SAMTLIGA ALBUM
-            db = db_connect("db/mml_db.db")
-            result = db.execute("SELECT title, type, release_date, name AS artist_name, artist_id, album_id, artist_album_rel.id AS rel_id FROM album INNER JOIN artist_album_rel ON album.id = artist_album_rel.album_id INNER JOIN artist ON artist.id = artist_album_rel.artist_id")
-            return result
-        end
-        def avg_score_hash
-            db = db_connect("db/mml_db.db")
-            albums_hash = db.execute("SELECT title, type, release_date, name AS artist_name, artist_id, album_id, artist_album_rel.id AS rel_id FROM album INNER JOIN artist_album_rel ON album.id = artist_album_rel.album_id INNER JOIN artist ON artist.id = artist_album_rel.artist_id")
-            result = {}
-            for album in albums_hash
-                result["#{album['album_id']}"] = (db.execute("SELECT AVG(rating) AS avg FROM user_album_rel WHERE rating >= 1 AND album_id = ?", album['album_id'])[0])['avg']
-            end
-            return result
-        end
-        def scores
-            possible_scores = ["masterpiece", "great", "very good", "good", "fine", "average", "bad", "very bad", "horrible", "appalling"]
-            return possible_scores
-        end
-        def active_user_album_rel_hash(album_id)
-            if $logged_in
-                db = db_connect("db/mml_db.db")
-                result = db.execute("SELECT title, user_id, album_id, is_favorite, rating, user_album_rel.id AS rel_id FROM album INNER JOIN user_album_rel ON album.id = user_album_rel.album_id INNER JOIN user ON user.id = user_album_rel.user_id WHERE album_id = ? AND user_id = ?", album_id, $user['id'])[0]
-            end
-            return result
-        end
-        def specific_user_album_rel_hash(album_id, user_id)
-            if $logged_in
-                db = db_connect("db/mml_db.db")
-                result = db.execute("SELECT title, user_id, album_id, is_favorite, rating, user_album_rel.id AS rel_id FROM album INNER JOIN user_album_rel ON album.id = user_album_rel.album_id INNER JOIN user ON user.id = user_album_rel.user_id WHERE album_id = ? AND user_id = ?", album_id, user_id)[0]
-            end
-            return result
-        end
-    end
-
 
     # Finds id of an album by its title
     #
@@ -204,7 +203,6 @@ module Model
     # @see Model#no_artist_album_relation
     # @see Model#update_album
     # @see Model#insert_artist
-
     def update_album_full(album_title, artist_name, album_type, release_date, old_album_id)
         db = db_connect("db/mml_db.db")
 
